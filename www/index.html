@@ -57,6 +57,13 @@
                         </div>
                         <div class="center sliding">Category</div>
                     </div>
+                     <!-- Navbar inner for Article page-->
+                    <div data-page="article" class="navbar-inner cached">
+                        <div class="left sliding">
+                            <a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a>
+                        </div>
+                        <div class="center sliding"></div>
+                    </div>
                 </div>
                 <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
                 <div class="pages navbar-through toolbar-through">
@@ -83,11 +90,20 @@
                     </div>
                     <!-- Category Page-->
                     <div data-page="category" class="page cached">
-                        <div class="page-content">
+                        <div data-distance="50" class="page-content infinite-scroll">
+                            <div class="content-block preloader-block">
+                                <div class="row preloaders">
+                                    <div class="col-100"><span class="preloader"></span></div>
+                                </div>
+                            </div>
                             <div class="list-block">
-                                <ul data-widget="articles">updating...</ul>
+                                <ul data-widget="articles"></ul>
                             </div>
                         </div>
+                    </div>
+                    <!-- Article Page-->
+                    <div data-page="article" class="page cached">
+                        
                     </div>
                 </div>
                 <!-- Bottom Toolbar place here -->

@@ -30,14 +30,70 @@
     });
 
     app.onPageInit('category', function (page) {
+
+    });
+
+    app.onPageAfterAnimation('category', function (page) {
         if (page.view === mainView) {
-            getArticles(page);
+            var catId = page.query.catId;
+            var storagekey = 'articles[' + catId + ']';
+            var results = JSON.parse(window.localStorage.getItem(storagekey)) || [];
+            if (results.length === 0) {
+                api.articlesbycategory(catId, '', function (data) {
+                    results = JSON.parse(data);
+                    // Update local storage data
+                    window.localStorage.setItem(storagekey, JSON.stringify(results));
+                    $$('.preloader-block').addClass('fadeOut');
+                    updateArticles(results);
+                });
+            }
+            else {
+                updateArticles(results);
+            }
         }
     });
 
+    app.onPageBeforeAnimation('article', function (page) {
+        if (page.view === mainView) {
+            // insert pre-init category title!
+        }
+    });
+
+    app.onPageAfterAnimation('article', function (page) {
+        if (page.view === mainView) {
+            var id = page.query.id;
+            var result = JSON.parse(window.localStorage.getItem('article[' + id + ']'));
+            if (!result || result === undefined || result === null) {
+                api.article(id, function (data) {
+                    result = JSON.parse(data);
+                    // Update local storage data
+                    window.localStorage.setItem('article[' + id + ']', JSON.stringify(result));
+                    updateArticle(result);
+                });
+            }
+            else {
+                updateArticle(result);
+            }
+        }
+    });
+
+    function updateArticle(article) {
+        $$('div[data-page="article"] .navbar-inner .center').html(article.category.name);
+        console.log(article);
+    }
+
+    app.onPageAfterAnimation('index', function (page) {
+        resetPages();
+    });
+
+    function resetPages() {
+        $$('div[data-page="category"] ul[data-widget="articles"]').html('');
+        $$('.preloader-block').removeClass('fadeOut');
+    }
+
     // Update Categories
     function updateCategories(categories) {
-        var list = $$('.panel-left ul[data-widget="categories"]');
+        var container = $$('.panel-left ul[data-widget="categories"]');
         var itemsHTML = '';
         for (var i = 0; i < categories.length; i++) {
             itemsHTML +=
@@ -51,13 +107,13 @@
                 '   </a>' +
                 '</li>';
         }
-        list.html('');
-        list.append(itemsHTML);
+        container.html('');
+        container.append(itemsHTML);
     }
 
     // Update Articles 
-    function updateArticles(articles) {
-        var list = $$('div[data-page="category"] ul[data-widget="articles"]');
+    function updateArticles(articles, append) {
+        var container = $$('div[data-page="category"] ul[data-widget="articles"]');
         var itemsHTML = '';
         for (var i = 0; i < articles.length; i++) {
             itemsHTML +=
@@ -71,8 +127,8 @@
                 '   </a>' +
                 '</li>';
         }
-        list.html('');
-        list.append(itemsHTML);
+        if (!append || append === false) container.html('');
+        container.append(itemsHTML);
     }
 
     // Fetch Categories 
@@ -113,6 +169,8 @@
         return results;
     }
 
+    // Clear all data on app start (!)
+    window.localStorage.clear();
     // Get and parse categories on app load
     getCategories();
 

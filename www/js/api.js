@@ -37,6 +37,10 @@
         articlesbycategory: function (catid, cursor, success, error) {
             if (!cursor || cursor === '') cursor = '0';
             return req('api/articles/' + catid + '/' + cursor, success, error);
+        },
+
+        article: function(id, success, error) {
+            return req('api/articles/' + id, success, error);
         }
     };
 
