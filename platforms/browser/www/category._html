@@ -1,0 +1,23 @@
+<!-- Navbar inner for View page-->
+<div data-page="category" class="navbar-inner">
+    <div class="left sliding">
+        <a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a>
+    </div>
+    <div class="center sliding title">Category</div>
+</div>
+<!-- View Page-->
+<div data-page="category" class="page">
+    <div class="page-content">
+        <!--
+        <div class="content-block-title"></div>
+        <div class="list-block">
+            <ul class="list-articles" style="display: none;"></ul>
+        </div>
+        -->
+        <div class="list-block media-list articles-list">
+            <ul>
+            <!-- articles fill to here -->    
+            </ul>
+        </div>
+    </div>
+</div>

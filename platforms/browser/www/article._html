@@ -1,0 +1,14 @@
+<!-- Navbar inner for View page-->
+<div data-page="article" class="navbar-inner">
+    <div class="left sliding">
+        <a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a>
+    </div>
+    <div class="center sliding">Article</div>
+</div>
+<!-- View Page-->
+<div data-page="article" class="page">
+    <div class="page-content">
+        <div class="content-block-title"></div>
+        <div class="content-block"></div>
+    </div>
+</div>
