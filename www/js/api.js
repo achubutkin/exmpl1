@@ -4,7 +4,8 @@
     'use strict';
 
     var urls = [
-		'http://localhost/sandbox_restapi/hs/'
+		/* 'http://localhost/sandbox_restapi/hs/' */
+        'http://web.applecity.kz:3380/sandbox_restapi/hs/'
 	], req, api;
 
     req = function (path, success, error, retry) {

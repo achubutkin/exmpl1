@@ -17,7 +17,7 @@
         dynamicNavbar: true,
         animatePages: true,
         swipeBackPage: false,
-        preloadPreviousPage: false,
+        preloadPreviousPage: true,
         // Enable Dom Cache so we can use all inline pages
         domCache: true
     });
