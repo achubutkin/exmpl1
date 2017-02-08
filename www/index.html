@@ -8,6 +8,7 @@
         <title></title>
         <!-- Path to Framework7 Library CSS-->
         <link rel="stylesheet" href="../../lib/framework7/css/framework7.ios.min.css">
+        <link rel="stylesheet" href="../../lib/framework7/css/framework7.ios.colors.css">
         <!-- Path to your custom app styles-->
         <link rel="stylesheet" href="css/app.css">
     </head>
@@ -17,18 +18,17 @@
         <!-- Panels overlay-->
         <div class="panel-overlay"></div>
         <!-- Left panel with reveal effect-->
-        <div class="panel panel-left panel-cover">
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <div class="center">Categories</div>
-                </div>
+        <div class="panel panel-left panel-cover layout-dark">
+            <div class="content-block-title">Left Panel</div>
+            <div class="content-block">
+                <p>This is a side panel. You can close it by clicking outsite or on this link: <a href="#" class="close-panel">close me</a>. You can put here anything, even another isolated view like in Right Panel.</p>
             </div>
-            <div class="page-content">
-                <div class="list-block">
-                    <ul class="list-categories">
-                        <!-- categories fill to here -->
-                    </ul>
-                </div>
+            <div class="content-block-title">Framework7 Kitchen Sink</div>
+            <div class="list-block">
+                <ul data-widget="categories"></ul>
+            </div>
+            <div class="content-block">
+                <p>Long text block goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sem urna, gravida non scelerisque id, fringilla ac velit. Phasellus elementum a ipsum at ornare. Mauris sagittis rhoncus euismod. Integer convallis augue eu lacus ultrices, in dictum elit consequat. Nulla faucibus massa id felis egestas eleifend. Proin consequat dignissim magna ut scelerisque. Vestibulum ac lorem semper, posuere sapien nec, pharetra massa. Nulla a tellus facilisis, sollicitudin quam porta, aliquam lorem. Fusce dignissim eros ac diam molestie, ut ultrices lorem tristique. Ut facilisis augue ac nisi egestas malesuada. Nunc posuere tortor quis eleifend mollis. Aliquam erat volutpat. Donec feugiat elit tellus, nec convallis orci elementum in. Sed urna mi, vestibulum id tempus id, pretium et ante. Pellentesque eget sollicitudin ligula. Phasellus pellentesque velit eu porta suscipit.</p>
             </div>
         </div>
         <!-- Views-->
@@ -42,13 +42,20 @@
                         <!-- We have home navbar without left link-->
                         <div class="center sliding title">
                             <a href="#" class="home">
-                                Title
+                                App
                             </a>
                         </div>
                         <div class="right">
                             <!-- Right link contains only icon - additional "icon-only" class-->
                             <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
                         </div>
+                    </div>
+                    <!-- Navbar inner for Category page-->
+                    <div data-page="category" class="navbar-inner cached">
+                        <div class="left sliding">
+                            <a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a>
+                        </div>
+                        <div class="center sliding">Category</div>
                     </div>
                 </div>
                 <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
@@ -74,13 +81,16 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Category Page-->
+                    <div data-page="category" class="page cached">
+                        <div class="page-content">
+                            <div class="list-block">
+                                <ul data-widget="articles">updating...</ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Bottom Toolbar-->
-                <!--
-                <div class="toolbar">
-                    <div class="toolbar-inner"><a href="#" class="link">Link 1</a><a href="#" class="link">Link 2</a></div>
-                </div>
-                -->
+                <!-- Bottom Toolbar place here -->
             </div>
         </div>
         <!-- Path to Framework7 Library JS-->

@@ -7,34 +7,42 @@
 
     // Init App
     app = new Framework7({
-        modalTitle: 'Title',
+        modalTitle: 'App',
         animateNavBackIcon: true,
-        externalLinks: 'a.external, .message a',
         router: true
     });
 
     // Add Right/Main View
     mainView = app.addView('.view-main', {
         dynamicNavbar: true,
-        animatePages: false,
+        animatePages: true,
         swipeBackPage: false,
-        reloadPages: true,
-        preloadPreviousPage: false
+        preloadPreviousPage: false,
+        // Enable Dom Cache so we can use all inline pages
+        domCache: true
     });
 
     $$(window).resize(function (e) {
+        app.showPreloader('Update.');
         window.localStorage.removeItem('categories');
         getCategories();
+        app.hidePreloader();
+    });
+
+    app.onPageInit('category', function (page) {
+        if (page.view === mainView) {
+            getArticles(page);
+        }
     });
 
     // Update Categories
     function updateCategories(categories) {
-        var list = $$('.panel-left').find('.list-categories');
+        var list = $$('.panel-left ul[data-widget="categories"]');
         var itemsHTML = '';
         for (var i = 0; i < categories.length; i++) {
             itemsHTML +=
                 '<li>' +
-                '   <a href="category.html?catId=' + categories[i].code + '" class="item-link close-panel">' +
+                '   <a href="#category?catId=' + categories[i].code + '" class="item-link close-panel">' +
                 '       <div class="item-content">' +
                 '           <div class="item-inner">' +
                 '               <div class="item-title">' + categories[i].name + '</div>' +
@@ -43,6 +51,27 @@
                 '   </a>' +
                 '</li>';
         }
+        list.html('');
+        list.append(itemsHTML);
+    }
+
+    // Update Articles 
+    function updateArticles(articles) {
+        var list = $$('div[data-page="category"] ul[data-widget="articles"]');
+        var itemsHTML = '';
+        for (var i = 0; i < articles.length; i++) {
+            itemsHTML +=
+                '<li>' +
+                '   <a href="#article?id=' + articles[i].code + '" class="item-link close-panel">' +
+                '       <div class="item-content">' +
+                '           <div class="item-inner">' +
+                '               <div class="item-title">' + articles[i].title + '</div>' +
+                '           </div>' +
+                '       </div>' +
+                '   </a>' +
+                '</li>';
+        }
+        list.html('');
         list.append(itemsHTML);
     }
 
@@ -65,6 +94,24 @@
         }
         return results;
     };
+
+    function getArticles(page) {
+        var catId = page.query.catId;
+        var storagekey = 'articles[' + catId + ']';
+        var results = JSON.parse(window.localStorage.getItem(storagekey)) || [];
+        if (results.length === 0) {
+            api.articlesbycategory(catId, '', function (data) {
+                results = JSON.parse(data);
+                // Update local storage data
+                window.localStorage.setItem(storagekey, JSON.stringify(results));
+                updateArticles(results);
+            });
+        }
+        else {
+            updateArticles(results);
+        }
+        return results;
+    }
 
     // Get and parse categories on app load
     getCategories();
